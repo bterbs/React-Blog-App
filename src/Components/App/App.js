@@ -70,6 +70,13 @@ const App = () => {
         toggleModifyPostComponent()
     }
 
+    const deletePost = (id) => {
+        const modifiedPost = allPosts.filter((eachPost) => {
+            return eachPost.id !== id
+        })
+        setAllPosts(modifiedPost)
+    }
+
     if (isModifyPost) {
         const post = allPosts.find((post) => {
             return post.id === editPostId
@@ -96,6 +103,7 @@ const App = () => {
                         <DisplayAllPosts
                             allPosts={allPosts}
                             editPost={editPost}
+                            deletePost={deletePost}
                         />
                     </Container>
                 </Route>

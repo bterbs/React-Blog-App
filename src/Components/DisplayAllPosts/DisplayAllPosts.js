@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import Card from "@material-ui/core/Card"
+import Typography from "@material-ui/core/Typography"
 import Post from "../Post/Post"
 
 class DisplayAllPosts extends Component {
@@ -50,7 +51,14 @@ class DisplayAllPosts extends Component {
 
         return (
             <>
-                <h2>All Posts</h2>
+                <Typography
+                    variant="h4"
+                    component="h2"
+                    gutterBottom
+                    style={{ textAlign: "left", margin: "1em 12px" }}
+                >
+                    BlogSpace ✨
+                </Typography>
                 {!blogPosts.length ? (
                     <div>
                         <h3>There is nothing to see here!</h3>
@@ -65,6 +73,7 @@ class DisplayAllPosts extends Component {
                                     title={eachPost.title}
                                     content={eachPost.content}
                                     editPost={this.props.editPost}
+                                    deletePost={this.props.deletePost}
                                 />
                             </Card>
                         )
