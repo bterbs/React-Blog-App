@@ -4,7 +4,7 @@ const Error = () => {
         <>
             <h1>Oops! Page not found!</h1>
             <p>
-                Go<a href="/">home</a>
+                Go<a href="/"> home</a>
             </p>
         </>
     )
