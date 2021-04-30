@@ -5,7 +5,7 @@ const CreateNewPost = (props) => {
     return (
         <>
             <Navbar />
-            <form>
+            <form onSubmit={props.savePost}>
                 <h1>Create New Post</h1>
                 <input
                     type="text"
@@ -13,6 +13,7 @@ const CreateNewPost = (props) => {
                     placeholder="title"
                     size="39"
                     required
+                    ref={props.getTitle}
                 ></input>
                 <br />
                 <br />
@@ -22,6 +23,7 @@ const CreateNewPost = (props) => {
                     rows="8"
                     cols="41"
                     required
+                    ref={props.getContent}
                 ></textarea>
                 <br />
                 <br />
