@@ -1,15 +1,11 @@
 import React from "react"
-import Navbar from "../Navbar/Navbar"
-
-const CreateNewPost = (props) => {
+const ModifyPost = () => {
     return (
         <>
-            <Navbar />
             <form>
-                <h1>Create New Post</h1>
+                <h1>Modify Post</h1>
                 <input
                     type="text"
-                    onChange={props.savePostTitleToState}
                     placeholder="title"
                     size="39"
                     required
@@ -17,7 +13,6 @@ const CreateNewPost = (props) => {
                 <br />
                 <br />
                 <textarea
-                    onChange={props.savePostContentToState}
                     placeholder="contents"
                     rows="8"
                     cols="41"
@@ -25,9 +20,9 @@ const CreateNewPost = (props) => {
                 ></textarea>
                 <br />
                 <br />
-                <button>Save Post</button>
+                <button>Update Post</button>
             </form>
         </>
     )
 }
-export default CreateNewPost
+export default ModifyPost

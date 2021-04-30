@@ -1,7 +1,7 @@
 import React from "react"
 import Navbar from "../Navbar/Navbar"
 
-const Posts = () => {
+const Post = () => {
     return (
         <>
             <Navbar />
@@ -14,4 +14,4 @@ const Posts = () => {
         </>
     )
 }
-export default Posts
+export default Post
