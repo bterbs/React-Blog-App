@@ -1,13 +1,11 @@
 import React from "react"
-import Navbar from "../Navbar/Navbar"
 
-const Post = () => {
+const Post = (props) => {
     return (
         <>
-            <Navbar />
             <section>
-                <h3>Post title will appear here</h3>
-                <p> Post contents will appear here</p>
+                <h3>{props.title}</h3>
+                <p>{props.content}</p>
                 <button>Edit</button>
                 <button>Delete</button>
             </section>

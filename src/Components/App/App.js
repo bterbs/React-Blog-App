@@ -1,14 +1,23 @@
 import React, { useState, useRef } from "react"
-import { BrowserRouter, Route, Switch } from "react-router-dom"
+import { Route, Switch } from "react-router-dom"
+import Container from "@material-ui/core/Container"
 
 import CreateNewPost from "../CreateNewPost/CreateNewPost"
-import Post from "../Post/Post"
+import DisplayAllPosts from "../DisplayAllPosts/DisplayAllPosts"
+import NavBar from "../Navbar/Navbar"
 import Error from "../Error/Error"
 
 const App = () => {
     const [title, setTitle] = useState("")
     const [content, setContent] = useState("")
-    const [allPosts, setAllPosts] = useState([])
+    const [allPosts, setAllPosts] = useState([
+        { title: "First Blog Post", content: "What up world!", id: Date.now() },
+        {
+            title: "Second Blog Post",
+            content: "Wubba Lubba Dub Dub!",
+            id: Date.now()
+        }
+    ])
 
     const getTitle = useRef()
     const getContent = useRef()
@@ -36,15 +45,23 @@ const App = () => {
     return (
         <main>
             <Switch>
-                <Route path="/" component={Post} exact />
+                <Route path="/" exact>
+                    <NavBar />
+                    <Container maxWidth="md" className="wrapper-centered">
+                        <DisplayAllPosts allPosts={allPosts} />
+                    </Container>
+                </Route>
                 <Route path="/create-new-post">
-                    <CreateNewPost
-                        savePostTitleToState={savePostTitleToState}
-                        savePostContentToState={savePostContentToState}
-                        getTitle={getTitle}
-                        getContent={getContent}
-                        savePost={savePost}
-                    />
+                    <NavBar />
+                    <Container maxWidth="md" className="wrapper-centered">
+                        <CreateNewPost
+                            savePostTitleToState={savePostTitleToState}
+                            savePostContentToState={savePostContentToState}
+                            getTitle={getTitle}
+                            getContent={getContent}
+                            savePost={savePost}
+                        />
+                    </Container>
                 </Route>
                 <Route component={Error} />
             </Switch>

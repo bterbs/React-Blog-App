@@ -1,0 +1,11 @@
+body {
+	height: 100vh;
+    background: #f1f1f1;
+}
+.wrapper-centered {
+	text-align: center;
+}
+
+h3 {
+	margin: 0;
+}
