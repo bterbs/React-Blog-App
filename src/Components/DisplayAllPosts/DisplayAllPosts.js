@@ -64,6 +64,7 @@ class DisplayAllPosts extends Component {
                                     key={eachPost.id}
                                     title={eachPost.title}
                                     content={eachPost.content}
+                                    editPost={this.props.editPost}
                                 />
                             </Card>
                         )

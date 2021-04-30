@@ -4,6 +4,7 @@ import Container from "@material-ui/core/Container"
 
 import CreateNewPost from "../CreateNewPost/CreateNewPost"
 import DisplayAllPosts from "../DisplayAllPosts/DisplayAllPosts"
+import ModifyPost from "../ModifyPost/ModifyPost"
 import NavBar from "../Navbar/Navbar"
 import Error from "../Error/Error"
 
@@ -15,9 +16,11 @@ const App = () => {
         {
             title: "Second Blog Post",
             content: "Wubba Lubba Dub Dub!",
-            id: Date.now()
+            id: Date.now() + 1
         }
     ])
+    const [isModifyPost, setIsModifyPost] = useState(false)
+    const [editPostId, setEditPostId] = useState("")
 
     const getTitle = useRef()
     const getContent = useRef()
@@ -42,13 +45,58 @@ const App = () => {
         getContent.current.value = ""
     }
 
+    const toggleModifyPostComponent = () => {
+        setIsModifyPost(!isModifyPost)
+    }
+
+    const editPost = (id) => {
+        setEditPostId(id)
+        toggleModifyPostComponent()
+    }
+
+    const updatePost = (event) => {
+        event.preventDefault()
+        const updatedPost = allPosts.map((eachPost) => {
+            if (eachPost.id === editPostId) {
+                return {
+                    ...eachPost,
+                    title: title || eachPost.title,
+                    content: content || eachPost.content
+                }
+            }
+            return eachPost
+        })
+        setAllPosts(updatedPost)
+        toggleModifyPostComponent()
+    }
+
+    if (isModifyPost) {
+        const post = allPosts.find((post) => {
+            return post.id === editPostId
+        })
+        return (
+            <Container maxWidth="md" className="wrapper-centered">
+                <ModifyPost
+                    title={post.title}
+                    content={post.content}
+                    updatePost={updatePost}
+                    savePostTitleToState={savePostTitleToState}
+                    savePostContentToState={savePostContentToState}
+                />
+            </Container>
+        )
+    }
+
     return (
         <main>
             <Switch>
                 <Route path="/" exact>
                     <NavBar />
                     <Container maxWidth="md" className="wrapper-centered">
-                        <DisplayAllPosts allPosts={allPosts} />
+                        <DisplayAllPosts
+                            allPosts={allPosts}
+                            editPost={editPost}
+                        />
                     </Container>
                 </Route>
                 <Route path="/create-new-post">
