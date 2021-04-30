@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { BrowserRouter, Route, Switch } from "react-router-dom"
 import ReactDOM from "react-dom"
-import App from "./App"
+import App from "./Components/App/App"
 import reportWebVitals from "./reportWebVitals"
 
 ReactDOM.render(
