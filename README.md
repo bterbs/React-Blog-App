@@ -12,6 +12,22 @@ To run project -
 2. `yarn start`
 3. Create a new blog post!
 
+### Project Specs
+Challenge
+
+The site should consist of a homepage with a paginated list of posts in descending chronological order. Each post should show a hero image, title, description, and author, with a link to view the full post.
+
+Creating a post should be a separate page with a simple form. Each post should have a hero image, title, description, body, and author. It should validate that all of these fields are filled out before saving the post. The hero image can be set by simply pasting in a URL to an existing image somewhere.
+
+You should also be able to edit and delete each post after it's created. Since this is purely a front-end code challenge, no user authentication is required.
+
+Technical Requirements
+-Use React
+-Must be served as a single-page application
+-The design must be responsive and work at both mobile and desktop sizes
+-Use git for version control
+-You can use any CSS framework you're comfortable with, e.g. Bootstrap, Tailwind, Material UI, antd, etc. The site design does not need to be unique or fancy, i.e. it can use off-the shelf components, but it should be clean, functional, and responsive.
+
 ## Available Scripts
 
 In the project directory, you can run:
