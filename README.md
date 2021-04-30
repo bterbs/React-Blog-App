@@ -10,7 +10,8 @@ any questions or inquiries can be sent to brittanyterbush@gmail.com
 To run project -
 1. `yarn install`
 2. `yarn start`
-3. Create a new blog post!
+3. Open http://localhost:3000 to view it in the browser.
+4. Create a new blog post!
 
 ### Project Specs
 Challenge
