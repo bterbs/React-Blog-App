@@ -1,6 +1,16 @@
-# Getting Started with Create React App
+# Blog Project / Technical Exercise
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+any questions or inquiries can be sent to brittanyterbush@gmail.com
+
+#### Notes: 
+- [Material UI](https://material-ui.com/) used for design/ component library.
+
+## Project Setup
+To run project -
+1. `yarn install`
+2. `yarn start`
+3. Create a new blog post!
 
 ## Available Scripts
 
