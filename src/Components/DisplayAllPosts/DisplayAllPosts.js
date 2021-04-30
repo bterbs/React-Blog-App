@@ -71,6 +71,8 @@ class DisplayAllPosts extends Component {
                                     id={eachPost.id}
                                     key={eachPost.id}
                                     title={eachPost.title}
+                                    user={eachPost.user}
+                                    image={eachPost.image}
                                     content={eachPost.content}
                                     editPost={this.props.editPost}
                                     deletePost={this.props.deletePost}

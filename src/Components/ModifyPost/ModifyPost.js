@@ -1,9 +1,15 @@
 import React from "react"
+import Button from "@material-ui/core/Button"
+import SaveIcon from "@material-ui/icons/Save"
+import Typography from "@material-ui/core/Typography"
+
 const ModifyPost = (props) => {
     return (
         <>
             <form>
-                <h1>Modify Post</h1>
+                <Typography variant="h3" gutterBottom>
+                    Edit Post
+                </Typography>
                 <input
                     defaultValue={props.title}
                     onChange={props.savePostTitleToState}
@@ -22,7 +28,33 @@ const ModifyPost = (props) => {
                 ></textarea>
                 <br />
                 <br />
-                <button onClick={props.updatePost}>Update Post</button>
+                <input
+                    defaultValue={props.user}
+                    onChange={props.savePostUserToState}
+                    text
+                    placeholder="user"
+                    size="39"
+                ></input>
+                <br />
+                <br />
+                <input
+                    defaultValue={props.image}
+                    onChange={props.savePostImageToState}
+                    text
+                    placeholder="Blog image"
+                    size="39"
+                ></input>
+                <br />
+                <br />
+                <Button
+                    onClick={props.updatePost}
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    startIcon={<SaveIcon />}
+                >
+                    Update Post
+                </Button>
             </form>
         </>
     )
