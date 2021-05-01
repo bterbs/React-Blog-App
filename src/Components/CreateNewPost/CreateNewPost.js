@@ -2,8 +2,10 @@ import React from "react"
 import Paper from "@material-ui/core/Paper"
 import Typography from "@material-ui/core/Typography"
 import "./CreateNewPost.css"
+import { UPDATE_TITLE, UPDATE_CONTENT, UPDATE_USER, UPDATE_IMAGE } from '../App/App.js';
 
 const CreateNewPost = (props) => {
+    const { update } = props;
     return (
         <>
             <Paper elevation={3} className="card-new-post">
@@ -14,44 +16,44 @@ const CreateNewPost = (props) => {
                     <div>
                         <input
                             type="text"
-                            onChange={props.savePostTitleToState}
+                            onChange={(e) => update(e, UPDATE_TITLE)}
                             placeholder="title"
                             size="39"
                             required
-                            ref={props.getTitle}
+                            value={props.title}
                         ></input>
                         <br />
                         <br />
                         <input
                             type="text"
-                            onChange={props.savePostUserToState}
+                            onChange={(e) => update(e, UPDATE_USER)}
                             placeholder="user"
                             size="39"
                             required
-                            ref={props.getUser}
+                            value={props.user}
                         ></input>
                     </div>
                     <br />
                     <br />
                     <textarea
-                        onChange={props.savePostContentToState}
+                        onChange={(e) => update(e, UPDATE_CONTENT)}
                         placeholder="contents"
                         rows="8"
                         cols="41"
                         required
-                        ref={props.getContent}
                         className="contain-mobile"
+                        value={props.content}
                     ></textarea>
                     <br />
                     <br />
                     <input
                         defaultValue={props.image}
-                        ref={props.getImage}
                         required
-                        onChange={props.savePostImageToState}
+                        onChange={(e) => update(e, UPDATE_IMAGE)}
                         text
                         placeholder="Blog image url"
                         size="39"
+                        value={props.image}
                     ></input>
                     <br />
                     <br />
