@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useReducer } from "react"
 import { Route, Switch } from "react-router-dom"
 import Container from "@material-ui/core/Container"
 import Card from "@material-ui/core/Card"
@@ -9,12 +9,14 @@ import ModifyPost from "../ModifyPost/ModifyPost"
 import NavBar from "../Navbar/Navbar"
 import Error from "../Error/Error"
 
-const App = () => {
-    const [title, setTitle] = useState("")
-    const [content, setContent] = useState("")
-    const [user, setUser] = useState("")
-    const [image, setImage] = useState("")
-    const [allPosts, setAllPosts] = useState([
+const initialState = {
+    title: "",
+    content: "",
+    user: "",
+    editPostId: "",
+    image: "",
+    isModifyPost: false,
+    allPosts: [
         {
             title: "First Blog Post",
             content:
@@ -33,81 +35,89 @@ const App = () => {
             image:
                 "https://randomwordgenerator.com/img/picture-generator/53e3d7454351ac14f1dc8460962e33791c3ad6e04e507440762e7ad3954fcd_640.jpg"
         }
-    ])
-    const [isModifyPost, setIsModifyPost] = useState(false)
-    const [editPostId, setEditPostId] = useState("")
+    ]
+}
 
-    const getTitle = useRef()
-    const getContent = useRef()
-    const getUser = useRef()
-    const getImage = useRef()
+export const UPDATE_TITLE = 'UPDATE_TITLE';
+export const UPDATE_CONTENT = 'UPDATE_CONTENT';
+export const UPDATE_USER = 'UPDATE_USER';
+export const UPDATE_IMAGE = 'UPDATE_IMAGE';
+const ADD_POST = 'ADD_POST';
+const UPDATE_POST = 'UPDATE_POST';
+const DELETE_POST = 'DELETE_POST';
+const EDIT_POST = 'EDIT_POST';
 
-    const savePostTitleToState = (event) => {
-        setTitle(event.target.value)
-        console.log(title)
+const reducer = (state, action) => {
+    switch(action.type) {
+        case UPDATE_TITLE: {
+            return { ...state, title: action.payload }
+        }
+        case UPDATE_CONTENT: {
+            return { ...state, content: action.payload }
+        }
+        case UPDATE_USER: {
+            return { ...state, user: action.payload }
+        }
+        case UPDATE_IMAGE: {
+            return { ...state, image: action.payload }
+        }
+        case ADD_POST : {
+            return { ...initialState, allPosts: [...state.allPosts, action.payload]}
+        }
+        case UPDATE_POST: {
+            const updatedPosts = state.allPosts.map((eachPost) => {
+                if (eachPost.id === action.id) {
+                    return {
+                        ...eachPost,
+                        title: state.title || eachPost.title,
+                        content: state.content || eachPost.content,
+                        user: state.user || eachPost.user,
+                        image: state.image || eachPost.image
+                    }
+                }
+                return eachPost
+            })
+            return { ...initialState, allPosts: updatedPosts }
+        }
+        case DELETE_POST: {
+            const updatedPosts = state.allPosts.filter((eachPost) => {
+                return eachPost.id !== action.id
+            })
+            return { ...initialState, allPosts: updatedPosts }
+        }
+        case EDIT_POST: {
+            return { ...state, editPostId: action.id, isModifyPost: !state.isModifyPost }
+        }
+        default: {
+            return state;
+        }
     }
-    const savePostContentToState = (event) => {
-        setContent(event.target.value)
-        console.log(content)
-    }
+}
 
-    const savePostImageToState = (event) => {
-        setImage(event.target.value)
-        console.log(image)
-    }
-
-    const savePostUserToState = (event) => {
-        setUser(event.target.value)
-        console.log(user)
+const App = () => {
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const { title, content, user, image, isModifyPost, allPosts, editPostId } = state;
+    const update = (e, actionType) => {
+        dispatch({type: actionType, payload: e.currentTarget.value })
     }
 
     const savePost = (event) => {
         event.preventDefault() // prevent default refreshing behavior of form when user clicks submit
         const id = Date.now()
-        setAllPosts([...allPosts, { title, content, id, user, image }])
-        setTitle("")
-        setContent("")
-        setUser("")
-        setImage("")
-        console.log(allPosts)
-        getTitle.current.value = ""
-        getContent.current.value = ""
-        getUser.current.value = ""
-        getImage.current.value = ""
-    }
-
-    const toggleModifyPostComponent = () => {
-        setIsModifyPost(!isModifyPost)
+        dispatch({ type: ADD_POST, payload: { title, content, id, user, image }})
     }
 
     const editPost = (id) => {
-        setEditPostId(id)
-        toggleModifyPostComponent()
+        dispatch({ type: EDIT_POST, id })
     }
 
     const updatePost = (event) => {
         event.preventDefault()
-        const updatedPost = allPosts.map((eachPost) => {
-            if (eachPost.id === editPostId) {
-                return {
-                    ...eachPost,
-                    title: title || eachPost.title,
-                    content: content || eachPost.content,
-                    user: user || eachPost.user,
-                    image: image || eachPost.image
-                }
-            }
-            return eachPost
-        })
-        setAllPosts(updatedPost)
-        toggleModifyPostComponent()
+        dispatch({ type: UPDATE_POST, id: editPostId, payload: { title, content, user, image }})
     }
 
     const deletePost = (id) => {
-        const modifiedPost = allPosts.filter((eachPost) => {
-            return eachPost.id !== id
-        })
-        setAllPosts(modifiedPost)
+        dispatch({ type: DELETE_POST, id })
     }
 
     if (isModifyPost) {
@@ -124,10 +134,7 @@ const App = () => {
                         user={post.user}
                         image={post.image}
                         updatePost={updatePost}
-                        savePostTitleToState={savePostTitleToState}
-                        savePostContentToState={savePostContentToState}
-                        savePostImageToState={savePostImageToState}
-                        savePostUserToState={savePostUserToState}
+                        update={update}
                     />
                 </Card>
             </Container>
@@ -151,15 +158,12 @@ const App = () => {
                     <NavBar />
                     <Container maxWidth="md" className="wrapper-centered">
                         <CreateNewPost
-                            savePostTitleToState={savePostTitleToState}
-                            savePostContentToState={savePostContentToState}
-                            savePostImageToState={savePostImageToState}
-                            savePostUserToState={savePostUserToState}
-                            getTitle={getTitle}
-                            getContent={getContent}
-                            getUser={getUser}
-                            getImage={getImage}
+                            update={update}
                             savePost={savePost}
+                            title={title}
+                            content={content}
+                            user={user}
+                            image={image}
                         />
                     </Container>
                 </Route>
